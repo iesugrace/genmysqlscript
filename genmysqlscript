@@ -25,8 +25,8 @@ cat > $target << 'GENERATE-SCRIPT'
 # chkconfig: - 64 36
 # description:	MySQL database server.
 # processname: mysqld
-# config: /etc/my.cnf
-# pidfile: /var/run/mysqld/mysqld.pid
+# config: {{CONFIGFILE}}
+# pidfile: {{PIDFILE}}
 
 ###################################################################
 #                                                                 #
@@ -378,6 +378,12 @@ pdefault="$result"
 # create the target script
 generate_script
 
+# the pid file value from config file
+pidfile=$(awk -F= '/^pid-file/{
+            gsub("^ +", "", $2);
+            gsub(" +$", "", $2);
+            print $2}' $config_file)
+
 # customize the script
 sed -i \
 -e "s@{{BASEDIR}}@$basedir@g" \
@@ -387,6 +393,7 @@ sed -i \
 -e "s@{{INSTANCE}}@$inst@g" \
 -e "s@{{MYPRINTDEFAULT}}@$pdefault@g" \
 -e "s@{{CONFIGFILE}}@$config_file@g" \
+-e "s@{{PIDFILE}}@$pidfile@g" \
 $target
 
 chmod 755 $target

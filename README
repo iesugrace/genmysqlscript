@@ -1,0 +1,26 @@
+When compile MySQL server from source, we don't have a service control script like the RPM version, with this script, we can make one in a minute. The script created by this script works for MySQL server version 5.6.14 and 5.1.71 on RHEL 6.3 and RHEL 6.5, other versions may work, but not guaranteed.
+
+
+See LICENSE for license agreement.
+
+
+How to use?
+
+1. Create a user named 'mysql' if it doesn't exist
+# useradd --system mysql
+
+2. Create a config file
+
+3. Generate a script, to accept the default value, press Enter.
+# bash genmysqlscript <path-of-the-config>
+What name for this instance [mysqld]:
+Where is the base dir (installation prefix) [/usr]:
+Where is the mysqld_safe [/usr/bin/mysqld_safe]:
+Where is the mysqladmin [/usr/bin/mysqladmin]: 
+Where is the mysql_install_db [/usr/bin/mysql_install_db]: 
+Where is the my_print_defaults [/usr/bin/my_print_defaults]:
+
+3. Control the service
+# service mysqld start
+# service mysqld status
+# service mysqld stop

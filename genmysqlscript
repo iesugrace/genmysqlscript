@@ -341,7 +341,7 @@ getexec()
 
 # config file must be specified and exist
 if [ -z "$1" ];then
-    help
+    help >&2
     exit 1
 fi
 if [ ! -e "$1" ];then
